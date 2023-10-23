@@ -113,6 +113,7 @@ function deckReducer(state: DeckState, { type, payload = {} }: ReducerActions) {
 }
 
 export default function useDeckState(userProvidedInitialState: DeckView) {
+  console.log("HELLO!!!!!")
   const [
     { initialized, navigationDirection, pendingView, activeView },
     dispatch
