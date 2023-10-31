@@ -112,8 +112,13 @@ function deckReducer(state: DeckState, { type, payload = {} }: ReducerActions) {
   }
 }
 
+export type DeckActions = {
+  stepForward: () => void,
+  stepBackward: () => void,
+};
+
 export default function useDeckState(userProvidedInitialState: DeckView) {
-  console.log("HELLO!!!!!")
+
   const [
     { initialized, navigationDirection, pendingView, activeView },
     dispatch
@@ -135,8 +140,12 @@ export default function useDeckState(userProvidedInitialState: DeckView) {
         dispatch({ type: 'INITIALIZE_TO', payload }),
       skipTo: (payload: Partial<DeckView>) =>
         dispatch({ type: 'SKIP_TO', payload }),
-      stepForward: () => dispatch({ type: 'STEP_FORWARD' }),
-      stepBackward: () => dispatch({ type: 'STEP_BACKWARD' }),
+      stepForward: () => {
+        dispatch({type: 'STEP_FORWARD'});
+      },
+      stepBackward: () => {
+        dispatch({type: 'STEP_BACKWARD'});
+      },
       advanceSlide: () => dispatch({ type: 'ADVANCE_SLIDE' }),
       regressSlide: (payload?: Pick<DeckView, 'stepIndex'>) =>
         dispatch({ type: 'REGRESS_SLIDE', payload }),

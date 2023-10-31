@@ -17,8 +17,8 @@ import styled, { CSSObject, ThemeProvider } from 'styled-components';
 import { useCollectSlides } from '../../hooks/use-slides';
 import useAspectRatioFitting from '../../hooks/use-aspect-ratio-fitting';
 import useDeckState, {
-  DeckStateAndActions,
-  DeckView
+    DeckStateAndActions,
+    DeckView
 } from '../../hooks/use-deck-state';
 import useMousetrap from '../../hooks/use-mousetrap';
 import useLocationSync from '../../hooks/use-location-sync';
@@ -160,7 +160,8 @@ export const DeckInternal = forwardRef<DeckRef, DeckInternalProps>(
       autoPlayLoop = false,
       autoPlayInterval = 1000,
       transition = defaultTransition,
-      backgroundImage
+      backgroundImage,
+        onDeckState
     },
     ref
   ) => {
@@ -171,6 +172,7 @@ export const DeckInternal = forwardRef<DeckRef, DeckInternalProps>(
       height: nativeSlideHeight = defaultTheme.size.height
     } = restTheme.size || {};
 
+    const _state = useDeckState(initialDeckState);
     const {
       initialized,
       pendingView,
@@ -185,7 +187,9 @@ export const DeckInternal = forwardRef<DeckRef, DeckInternalProps>(
       regressSlide,
       commitTransition,
       cancelTransition
-    } = useDeckState(initialDeckState);
+    } = _state;
+
+    onDeckState && onDeckState(_state)
 
     const [
       setPlaceholderContainer,
@@ -522,6 +526,7 @@ type BackdropOverrides = {
   suppressBackdropFallback?: boolean;
 };
 
+
 export type DeckRef = Omit<
   DeckStateAndActions,
   | 'cancelTransition'
@@ -543,6 +548,7 @@ export type DeckProps = {
   printScale?: number;
   overviewScale?: number;
   transition?: SlideTransition;
+  onDeckState: (state: ReturnType<typeof useDeckState>) => void,
   /**
    * @deprecated set a value to one of the `Backdrop`,
    * `backdropStyle.background`, or `backdropStyle.backgroundColor` properties

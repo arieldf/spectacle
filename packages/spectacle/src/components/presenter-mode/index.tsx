@@ -84,7 +84,7 @@ const PresenterMode = (props: PresenterModeProps): ReactElement => {
     <PresenterDeckContainer>
       <NotesColumn>
         <FlexBox justifyContent="space-between" paddingTop={15} paddingX={15}>
-          <SpectacleLogo size={60} />
+          <img src={"https://qapio.com/wp-content/uploads/2022/05/QapioLogo.svg"} height={60} />
           <FlexBox width={0.75} flexDirection="column" alignItems="flex-end">
             <Text
               data-testid="use-browser-tab-text"
